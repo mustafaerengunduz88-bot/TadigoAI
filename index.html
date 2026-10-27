@@ -4,317 +4,337 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tadigo | Yemek Topluluğu</title>
+<title>Tadigo | Lezzetini Keşfet</title>
 <style>
-:root{--orange:#ff6500;--bg:#fff5eb;--card:#fff;--text:#302820;--muted:#81766d}
+:root{--orange:#ff681d;--cream:#fff8f1;--dark:#29251f;--muted:#81766d;--line:#f0e4d9}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{background:linear-gradient(135deg,#ff6500,#ff9b35);color:white;padding:24px 16px;text-align:center}
-header h1{font-size:36px;margin:0}
-header p{margin:8px 0 0}
-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:12px;background:white;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0000000a}
-nav a{color:var(--orange);font-weight:bold;text-decoration:none;padding:8px}
-main{max-width:1100px;margin:22px auto;padding:0 14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
-.card{background:var(--card);padding:20px;border-radius:18px;box-shadow:0 4px 16px #74401b10;margin-bottom:18px}
-h2{font-size:21px;margin:0 0 14px}
-h3{margin:8px 0}
-label{display:block;font-size:14px;font-weight:bold;margin:13px 0 6px}
-input,textarea,select{width:100%;padding:12px;border:1px solid #e7d9cc;border-radius:10px;font:inherit;background:white}
-textarea{min-height:95px;resize:vertical}
-button{border:0;background:var(--orange);color:white;padding:11px 15px;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer}
-button:hover{filter:brightness(.95)}
-.secondary{background:#fff0e2;color:#d95000}
-.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.profile{display:flex;align-items:center;gap:12px}
-.avatar{background:#fff0df;border-radius:50%;width:48px;height:48px;display:grid;place-items:center;font-size:25px;flex-shrink:0}
-.profile div:last-child{min-width:0}
-.profile-name{font-weight:bold;font-size:16px;overflow-wrap:anywhere}
-.profile-edit{display:flex;gap:8px;margin-top:14px}
-.profile-edit input{min-width:0;flex:1}
-.post{border:1px solid #f0e6dd;border-radius:14px;padding:15px;margin-top:13px}
-.post-top{display:flex;gap:10px;align-items:center}
-.post-top .avatar{width:40px;height:40px;font-size:21px}
-.post-top .muted{margin-top:3px}
-.post-food{font-size:42px;margin:14px 0 5px}
-.post-description{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
-.post-actions{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
-.like-btn{background:#fff0e2;color:#d95000}
-.like-btn.liked{background:#ffe0e0;color:#c62828}
-.empty{text-align:center;padding:24px 8px;color:var(--muted)}
-.popular-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0e6dd}
-.popular-item:last-child{border:0}
-.popular-emoji{font-size:30px}
-.popular-info{flex:1;min-width:0}
-.popular-info b{display:block;overflow-wrap:anywhere}
-.rank{font-weight:bold;color:var(--orange);width:22px}
-.tag{display:inline-block;background:#fff0e2;color:#c54d00;padding:5px 9px;border-radius:20px;font-size:12px;margin-top:5px}
-.notice{background:#fff4df;padding:12px;border-radius:10px;color:#765020;font-size:13px;line-height:1.5}
-footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
-@media(max-width:720px){.grid{grid-template-columns:1fr}header h1{font-size:30px}.card{padding:16px}}
+body{margin:0;background:var(--cream);color:var(--dark);font-family:Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1180px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-size:27px;font-weight:900;color:var(--orange);cursor:pointer;white-space:nowrap}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav button{border:0;background:transparent;padding:11px 13px;border-radius:10px;color:#64594f;font-weight:bold}
+nav button.active,nav button:hover{background:#fff0e5;color:var(--orange)}
+main{max-width:1180px;margin:25px auto;padding:0 22px;min-height:65vh}
+.page{display:none}
+.page.active{display:block}
+.hero{background:linear-gradient(120deg,#ffe5cf,#fff1e5);border-radius:26px;padding:40px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:20px;overflow:hidden}
+.eyebrow{color:#d95613;font-size:12px;font-weight:900;letter-spacing:2px}
+h1{font-size:clamp(38px,5vw,60px);line-height:1.05;letter-spacing:-2px;margin:15px 0}
+h1 span{color:var(--orange)}
+p{line-height:1.65}
+.hero p{color:#76665a;max-width:440px}
+.hero-art{text-align:center;font-size:clamp(110px,18vw,190px);filter:drop-shadow(0 14px 12px #9e5a2930)}
+.search{display:flex;gap:8px;background:white;border-radius:13px;padding:6px;max-width:450px;margin-top:22px}
+.search input{border:0;outline:0;min-width:0;flex:1;padding:12px;background:transparent}
+.primary{background:var(--orange);color:white;border:0;border-radius:10px;padding:13px 17px;font-weight:bold}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 17px}
+.section-head h2{margin:0 0 5px;font-size:26px}
+.section-head p{margin:0;color:var(--muted);font-size:14px}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.category{background:white;border:1px solid var(--line);border-radius:17px;padding:19px 10px;text-align:center;color:var(--dark);transition:.2s}
+.category:hover{border-color:#ffb58a;transform:translateY(-3px)}
+.category span{display:block;font-size:38px;margin-bottom:10px}
+.category b{font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:19px;overflow:hidden;min-width:0;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.foodpic{height:170px;display:grid;place-items:center;font-size:78px;background:linear-gradient(135deg,#ffe4d0,#fff3e6);position:relative}
+.foodpic.pink{background:linear-gradient(135deg,#ffe1e1,#fff1e7)}
+.foodpic.green{background:linear-gradient(135deg,#e5f0d9,#f9f5e8)}
+.foodpic.purple{background:linear-gradient(135deg,#eee0ff,#fff0e8)}
+.foodpic.yellow{background:linear-gradient(135deg,#fff0bc,#fff6e4)}
+.heart{position:absolute;right:12px;top:12px;border:0;background:white;color:#d94848;border-radius:50%;width:39px;height:39px;font-size:23px;box-shadow:0 3px 10px #0000000a}
+.heart.active{color:#e32446}
+.bodycard{padding:16px}
+.bodycard h3{font-size:17px;margin:0 0 8px}
+.bodycard p{font-size:13px;color:var(--muted);min-height:40px;margin:0;line-height:1.5}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:var(--muted)}
+.secondary{background:#fff0e5;color:#d95512;border:0;border-radius:9px;padding:10px 12px;font-weight:bold}
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:25px}
+.pagination button{min-width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:white;color:var(--dark);font-weight:bold}
+.pagination button.active{background:var(--orange);color:white;border-color:var(--orange)}
+.pagination button:disabled{opacity:.35;cursor:not-allowed}
+.empty{background:white;border:1px dashed #e7d5c5;border-radius:16px;text-align:center;padding:35px;color:var(--muted);grid-column:1/-1}
+footer{background:white;margin-top:45px;padding:25px 15px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:760px){
+.nav{padding:13px;flex-direction:column;gap:10px}
+nav{justify-content:center}
+nav button{padding:9px;font-size:13px}
+main{padding:0 14px;margin-top:15px}
+.hero{grid-template-columns:1fr;padding:26px 20px;gap:0}
+.hero-art{font-size:125px;padding:12px}
+.categories{grid-template-columns:repeat(2,1fr);gap:10px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.foodpic{height:125px;font-size:58px}
+.bodycard{padding:11px}
+.bodycard h3{font-size:15px}
+.bodycard p{font-size:12px}
+.meta{align-items:flex-start;flex-direction:column}
+.section-head h2{font-size:22px}
+}
+@media(max-width:380px){
+.grid{grid-template-columns:1fr}
+.foodpic{height:170px;font-size:75px}
+.meta{flex-direction:row;align-items:center}
+}
 </style>
 </head>
 <body>
+
 <header>
-<h1>🍔 Tadigo</h1>
-<p>Yemeklerini paylaş, yeni lezzetler keşfet!</p>
+<div class="nav">
+<div class="logo" onclick="go('home')">🍔 Tadigo</div>
+<nav>
+<button id="nav-home" class="active" onclick="go('home')">🏠 Ana Sayfa</button>
+<button id="nav-recipes" onclick="go('recipes')">🍳 Tarifler</button>
+<button id="nav-favorites" onclick="go('favorites')">❤️ Favorilerim</button>
+</nav>
+</div>
 </header>
 
-<nav>
-<a href="#community">👥 Topluluk</a>
-<a href="#share">🍕 Yemek paylaş</a>
-<a href="#popular">🏆 Popüler yemekler</a>
-</nav>
-
 <main>
-<div class="grid">
+<section id="page-home" class="page active">
+<div class="hero">
 <div>
-<section class="card">
-<h2>👤 Profilin</h2>
-<div class="profile">
-<div class="avatar">😎</div>
-<div>
-<div class="profile-name" id="profileName">Tadigo Üyesi</div>
-<div class="muted">Yemek topluluğunun bir parçasısın!</div>
-</div>
-</div>
-<div class="profile-edit">
-<input id="username" maxlength="24" placeholder="Kullanıcı adın">
-<button onclick="saveName()">Kaydet</button>
-</div>
-<p class="muted">Paylaşımların kullanıcı adınla görünür.</p>
-</section>
-
-<section class="card" id="share">
-<h2>🍕 Yemek paylaş</h2>
-<form id="postForm">
-<label for="food">Yemek adı</label>
-<input id="food" maxlength="50" placeholder="Örn. Hamburger" required>
-
-<label for="emoji">Yemek emojisi</label>
-<select id="emoji">
-<option value="🍔">🍔 Hamburger</option>
-<option value="🍕">🍕 Pizza</option>
-<option value="🍟">🍟 Patates kızartması</option>
-<option value="🍝">🍝 Makarna</option>
-<option value="🌯">🌯 Dürüm</option>
-<option value="🥗">🥗 Salata</option>
-<option value="🍰">🍰 Pasta</option>
-<option value="🍜">🍜 Çorba / noodle</option>
-<option value="🍗">🍗 Tavuk</option>
-<option value="🍚">🍚 Pilav</option>
-<option value="🥪">🥪 Sandviç</option>
-<option value="🍩">🍩 Donut</option>
-<option value="🍦">🍦 Dondurma</option>
-<option value="🧁">🧁 Kek</option>
-</select>
-
-<label for="description">Neden seviyorsun?</label>
-<textarea id="description" maxlength="280" placeholder="Bu yemeği neden sevdiğini anlat..."></textarea>
-
-<button type="submit" style="width:100%;margin-top:14px">🚀 Paylaşımı yayınla</button>
+<div class="eyebrow">LEZZETİNİ KEŞFET</div>
+<h1>Bugün ne <span>yesek?</span></h1>
+<p>Yeni tarifler keşfet, favorilerini kaydet ve mutfağına ilham kat. Tadigo'da her gün yeni bir lezzet var!</p>
+<form class="search" id="searchForm">
+<input id="searchInput" placeholder="Yemek veya tarif ara..." aria-label="Yemek ara">
+<button class="primary" type="submit">Ara →</button>
 </form>
-<p class="muted">Paylaşımın bu tarayıcıda kaydedilir.</p>
-</section>
-
-<section class="card" id="popular">
-<h2>🏆 En popüler yemekler</h2>
-<p class="muted">Beğeni sayısına göre sıralama</p>
-<div id="popularList"></div>
-</section>
+</div>
+<div class="hero-art">🍔</div>
 </div>
 
-<div>
-<section class="card" id="community">
-<h2>👥 Yemek Topluluğu</h2>
-<p class="muted">Herkesin yemek fikirlerini keşfet. Sen de sevdiğin lezzetleri paylaş!</p>
-<div class="notice">💡 Bir yemeği beğendiğinde kalbe bas. En çok beğenilen yemekler popülerler listesinde görünür.</div>
-<div id="feed"></div>
+<div class="section-head">
+<div><h2>Ne yemek istersin?</h2><p>Bir kategori seç, lezzetini bul.</p></div>
+</div>
+<div class="categories">
+<button class="category" onclick="filterCategory('Pizza')"><span>🍕</span><b>Pizza</b></button>
+<button class="category" onclick="filterCategory('Burger')"><span>🍔</span><b>Burger</b></button>
+<button class="category" onclick="filterCategory('Makarna')"><span>🍝</span><b>Makarna</b></button>
+<button class="category" onclick="filterCategory('Tatlı')"><span>🍰</span><b>Tatlı</b></button>
+</div>
+
+<div class="section-head">
+<div><h2>Öne çıkan tarifler ✨</h2><p>Bugün deneyebileceğin lezzetler.</p></div>
+<button class="secondary" onclick="go('recipes')">Tüm tarifler →</button>
+</div>
+<div class="grid" id="homeGrid"></div>
 </section>
+
+<section id="page-recipes" class="page">
+<div class="section-head">
+<div><h2>🍳 Yemek Tarifleri</h2><p id="recipeSubtitle">Yeni tarifler keşfet.</p></div>
+<button class="secondary" onclick="clearFilters()">Filtreleri temizle</button>
 </div>
+<div class="search" style="margin:0 0 22px;max-width:100%">
+<input id="recipeSearch" placeholder="Tariflerde ara..." aria-label="Tariflerde ara">
+<button class="primary" onclick="searchRecipes()">Ara</button>
 </div>
+<div class="grid" id="recipeGrid"></div>
+<div class="pagination" id="pagination"></div>
+</section>
+
+<section id="page-favorites" class="page">
+<div class="section-head">
+<div><h2>❤️ Favorilerim</h2><p>Kaydettiğin tarifler burada.</p></div>
+</div>
+<div class="grid" id="favoriteGrid"></div>
+<div id="favoriteEmpty" class="empty">Henüz favorin yok. Tarif kartlarındaki ♡ simgesine basarak tarif ekleyebilirsin.</div>
+</section>
 </main>
 
-<footer>🍔 Tadigo — Lezzetini paylaş!</footer>
+<footer>🍔 Tadigo · Her gün yeni bir lezzet keşfet.</footer>
 
 <script>
-const STORE_KEY="tadigo_community_posts_v1";
-const NAME_KEY="tadigo_community_name_v1";
+"use strict";
 
-function readStore(key,fallback){
+const recipes=[
+{id:1,name:"Ev Yapımı Burger",category:"Burger",emoji:"🍔",time:"25 dk",desc:"Evde hazırlayabileceğin klasik ve doyurucu burger.",ingredients:["Burger ekmeği","Köfte","Domates","Marul","Peynir"],steps:["Köfteyi tamamen pişir.","Ekmekleri hafifçe ısıt.","Domatesi ve marulu hazırla.","Malzemeleri ekmeğin arasına yerleştir."],color:""},
+{id:2,name:"Bol Peynirli Pizza",category:"Pizza",emoji:"🍕",time:"35 dk",desc:"Eritilmiş peynirli nefis bir pizza.",ingredients:["Pizza hamuru","Domates sosu","Mozzarella","Kekik"],steps:["Fırını uygun sıcaklığa getir.","Hamurun üzerine sos sür.","Peyniri ve kekiği ekle.","Hamur pişene kadar fırınla."],color:"pink"},
+{id:3,name:"Kremalı Makarna",category:"Makarna",emoji:"🍝",time:"20 dk",desc:"Kısa sürede hazırlanan kremalı makarna.",ingredients:["Makarna","Krema","Sarımsak","Tuz","Karabiber"],steps:["Makarnayı paket talimatına göre haşla.","Sarımsağı tavada kısa süre pişir.","Kremayı ekle.","Süzülen makarnayla karıştır."],color:"green"},
+{id:4,name:"Çikolatalı Pasta",category:"Tatlı",emoji:"🍰",time:"40 dk",desc:"Çikolata sevenlere tatlı bir tarif.",ingredients:["Un","Yumurta","Süt","Kakao","Şeker"],steps:["Malzemeleri uygun bir kapta karıştır.","Karışımı kalıba dök.","Tarife uygun sıcaklıkta pişir.","Soğuyunca servis et."],color:"purple"},
+{id:5,name:"Çıtır Patates",category:"Atıştırmalık",emoji:"🍟",time:"30 dk",desc:"Baharatlarla hazırlanan çıtır patatesler.",ingredients:["Patates","Zeytinyağı","Tuz","Baharat"],steps:["Patatesleri dilimle.","Yağ ve baharatlarla karıştır.","Fırın tepsisine yerleştir.","Pişene kadar fırınla."],color:"yellow"},
+{id:6,name:"Meyveli Yoğurt",category:"Tatlı",emoji:"🍓",time:"5 dk",desc:"Meyvelerle hazırlanan pratik atıştırmalık.",ingredients:["Yoğurt","Çilek","Muz","İsteğe bağlı yulaf"],steps:["Meyveleri yıka ve doğra.","Yoğurdu kaseye al.","Meyveleri üzerine ekle.","İstersen yulafla servis et."],color:"pink"},
+{id:7,name:"Sebzeli Makarna",category:"Makarna",emoji:"🥦",time:"25 dk",desc:"Sebzelerle renklenen makarna tarifi.",ingredients:["Makarna","Kabak","Havuç","Zeytinyağı"],steps:["Makarnayı haşla.","Sebzeleri doğra.","Sebzeleri tavada pişir.","Makarnayla karıştır."],color:"green"},
+{id:8,name:"Margarita Pizza",category:"Pizza",emoji:"🍕",time:"30 dk",desc:"Domates ve peynirle hazırlanan klasik pizza.",ingredients:["Pizza hamuru","Domates","Mozzarella","Fesleğen"],steps:["Hamuru aç.","Domates sosunu yay.","Peynir ekle.","Pişir ve fesleğenle servis et."],color:"pink"},
+{id:9,name:"Mini Cheeseburger",category:"Burger",emoji:"🍔",time:"25 dk",desc:"Küçük ekmeklerle hazırlanan burgerler.",ingredients:["Mini burger ekmeği","Köfte","Peynir","Marul"],steps:["Köfteleri tamamen pişir.","Ekmekleri hazırla.","Peynir ve sebzeleri ekle.","Burgerleri birleştir."],color:""},
+{id:10,name:"Muzlu Pankek",category:"Tatlı",emoji:"🥞",time:"15 dk",desc:"Kahvaltı veya tatlı molası için pankek.",ingredients:["Un","Yumurta","Süt","Muz"],steps:["Malzemeleri karıştır.","Tavayı ısıt.","Karışımdan küçük parçalar dök.","İki tarafını da pişir."],color:"yellow"},
+{id:11,name:"Peynirli Tost",category:"Atıştırmalık",emoji:"🥪",time:"10 dk",desc:"Pratik ve sıcak peynirli tost.",ingredients:["Ekmek","Kaşar peyniri","İsteğe bağlı domates"],steps:["Peyniri ekmeklerin arasına koy.","Tost makinesini ısıt.","Peynir eriyene kadar pişir."],color:""},
+{id:12,name:"Çikolatalı Kurabiye",category:"Tatlı",emoji:"🍪",time:"25 dk",desc:"Çikolata parçalı kurabiye tarifi.",ingredients:["Un","Tereyağı","Şeker","Çikolata parçaları"],steps:["Malzemeleri karıştır.","Hamuru küçük parçalara ayır.","Tepsiye aralıklı diz.","Tarife uygun sürede pişir."],color:"purple"}
+];
+
+function readStorage(key,fallback){
 try{
 const value=localStorage.getItem(key);
 return value===null?fallback:JSON.parse(value);
-}catch(error){return fallback}
+}catch(error){return fallback;}
 }
 
-let posts=readStore(STORE_KEY,[]);
-let username=readStore(NAME_KEY,"");
+let favorites=readStorage("tadigo_favorites_v3",[]);
+if(!Array.isArray(favorites))favorites=[];
+let currentCategory="";
+let currentQuery="";
+let currentPage=1;
+const perPage=6;
 
-if(!Array.isArray(posts))posts=[];
-
-function safeText(value){
-return String(value).replace(/[&<>"']/g,function(char){
-return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char];
-});
-}
-
-function savePosts(){
+function saveFavorites(){
 try{
-localStorage.setItem(STORE_KEY,JSON.stringify(posts));
+localStorage.setItem("tadigo_favorites_v3",JSON.stringify(favorites));
 }catch(error){
-alert("Kayıt yapılamadı. Tarayıcının depolama alanını kontrol et.");
+alert("Favoriler kaydedilemedi. Tarayıcı depolamasını kontrol et.");
 }
 }
 
-function saveName(){
-const field=document.getElementById("username");
-const value=field.value.trim().slice(0,24);
-if(!value){
-alert("Önce bir kullanıcı adı yaz!");
-return;
-}
-username=value;
-localStorage.setItem(NAME_KEY,JSON.stringify(username));
-render();
-}
-
-document.getElementById("username").value=username;
-
-function formatDate(value){
-try{
-return new Date(value).toLocaleDateString("tr-TR",{
-day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"
+function safe(value){
+return String(value).replace(/[&<>"']/g,function(c){
+return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
 });
-}catch(error){return ""}
 }
 
-document.getElementById("postForm").addEventListener("submit",function(event){
+function go(name){
+document.querySelectorAll(".page").forEach(function(el){
+el.classList.remove("active");
+});
+document.querySelectorAll("nav button").forEach(function(el){
+el.classList.remove("active");
+});
+const page=document.getElementById("page-"+name);
+if(!page)return;
+page.classList.add("active");
+const navButton=document.getElementById("nav-"+name);
+if(navButton)navButton.classList.add("active");
+if(name==="recipes")renderRecipes();
+if(name==="favorites")renderFavorites();
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function toggleFavorite(id){
+if(favorites.includes(id)){
+favorites=favorites.filter(function(value){return value!==id;});
+}else{
+favorites.push(id);
+}
+saveFavorites();
+renderHome();
+renderRecipes();
+renderFavorites();
+}
+
+function card(recipe){
+const saved=favorites.includes(recipe.id);
+return '<article class="card">'+
+'<div class="foodpic '+safe(recipe.color)+'">'+safe(recipe.emoji)+
+'<button class="heart '+(saved?"active":"")+'" aria-label="Favorilere ekle" onclick="toggleFavorite('+recipe.id+')">'+(saved?"♥":"♡")+'</button>'+
+'</div><div class="bodycard"><h3>'+safe(recipe.name)+'</h3>'+
+'<p>'+safe(recipe.desc)+'</p><div class="meta"><span>⏱ '+safe(recipe.time)+'</span>'+
+'<button class="secondary" onclick="showRecipe('+recipe.id+')">Tarifi gör →</button></div></div></article>';
+}
+
+function showRecipe(id){
+const recipe=recipes.find(function(item){return item.id===id;});
+if(!recipe)return;
+const ingredients=recipe.ingredients.map(function(item){return "• "+item;}).join("\n");
+const steps=recipe.steps.map(function(item,index){return (index+1)+". "+item;}).join("\n");
+alert(recipe.emoji+" "+recipe.name+"\n\nHazırlama süresi: "+recipe.time+
+"\n\nMALZEMELER\n"+ingredients+"\n\nYAPILIŞI\n"+steps+
+"\n\nNot: Malzemelerin piştiğinden emin ol. Alerjin varsa içerikleri kontrol et.");
+}
+
+function filteredRecipes(){
+return recipes.filter(function(recipe){
+const matchesCategory=!currentCategory||recipe.category===currentCategory;
+const text=(recipe.name+" "+recipe.category+" "+recipe.desc).toLocaleLowerCase("tr-TR");
+const matchesQuery=!currentQuery||text.includes(currentQuery);
+return matchesCategory&&matchesQuery;
+});
+}
+
+function renderHome(){
+document.getElementById("homeGrid").innerHTML=recipes.slice(0,3).map(card).join("");
+}
+
+function renderRecipes(){
+const list=filteredRecipes();
+const totalPages=Math.max(1,Math.ceil(list.length/perPage));
+if(currentPage>totalPages)currentPage=totalPages;
+const start=(currentPage-1)*perPage;
+const shown=list.slice(start,start+perPage);
+
+document.getElementById("recipeSubtitle").textContent=
+list.length+" tarif bulundu"+(currentCategory?" · "+currentCategory:"");
+document.getElementById("recipeGrid").innerHTML=shown.length?
+shown.map(card).join(""):'<div class="empty">Tarif bulunamadı. Aramanı veya kategorini değiştir.</div>';
+
+let html='<button '+(currentPage===1?"disabled":"")+' onclick="changePage('+(currentPage-1)+')">←</button>';
+for(let p=1;p<=totalPages;p++){
+html+='<button class="'+(p===currentPage?"active":"")+'" onclick="changePage('+p+')">'+p+'</button>';
+}
+html+='<button '+(currentPage===totalPages?"disabled":"")+' onclick="changePage('+(currentPage+1)+')">→</button>';
+document.getElementById("pagination").innerHTML=html;
+}
+
+function changePage(page){
+const total=Math.max(1,Math.ceil(filteredRecipes().length/perPage));
+if(page<1||page>total)return;
+currentPage=page;
+renderRecipes();
+document.getElementById("page-recipes").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderFavorites(){
+const saved=recipes.filter(function(recipe){return favorites.includes(recipe.id);});
+document.getElementById("favoriteGrid").innerHTML=saved.map(card).join("");
+document.getElementById("favoriteEmpty").style.display=saved.length?"none":"block";
+}
+
+function filterCategory(category){
+currentCategory=category;
+currentQuery="";
+currentPage=1;
+document.getElementById("recipeSearch").value="";
+go("recipes");
+}
+
+function searchRecipes(){
+currentQuery=document.getElementById("recipeSearch").value.trim().toLocaleLowerCase("tr-TR");
+currentCategory="";
+currentPage=1;
+go("recipes");
+}
+
+function clearFilters(){
+currentCategory="";
+currentQuery="";
+currentPage=1;
+document.getElementById("recipeSearch").value="";
+renderRecipes();
+}
+
+document.getElementById("searchForm").addEventListener("submit",function(event){
 event.preventDefault();
-
-if(!username){
-alert("Önce profil bölümünden kullanıcı adını kaydet!");
-document.getElementById("username").focus();
-return;
-}
-
-const food=document.getElementById("food").value.trim();
-const description=document.getElementById("description").value.trim();
-const emoji=document.getElementById("emoji").value;
-
-if(!food){
-alert("Yemek adını yazmalısın!");
-return;
-}
-
-posts.unshift({
-id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),
-username:username,
-food:food,
-description:description,
-emoji:emoji,
-likes:[],
-date:new Date().toISOString()
+currentQuery=document.getElementById("searchInput").value.trim().toLocaleLowerCase("tr-TR");
+currentCategory="";
+currentPage=1;
+document.getElementById("recipeSearch").value=document.getElementById("searchInput").value;
+go("recipes");
 });
 
-savePosts();
-this.reset();
-render();
-document.getElementById("community").scrollIntoView({behavior:"smooth"});
+document.getElementById("recipeSearch").addEventListener("keydown",function(event){
+if(event.key==="Enter"){
+event.preventDefault();
+searchRecipes();
+}
 });
 
-function toggleLike(id){
-if(!username){
-alert("Beğenmek için önce bir kullanıcı adı kaydet!");
-document.getElementById("username").focus();
-return;
-}
-
-const post=posts.find(function(item){return item.id===id;});
-if(!post)return;
-
-if(!Array.isArray(post.likes))post.likes=[];
-const index=post.likes.indexOf(username);
-
-if(index>=0){
-post.likes.splice(index,1);
-}else{
-post.likes.push(username);
-}
-
-savePosts();
-render();
-}
-
-function deletePost(id){
-const post=posts.find(function(item){return item.id===id;});
-if(!post||post.username!==username)return;
-
-if(!confirm("Bu paylaşımı silmek istiyor musun?"))return;
-
-posts=posts.filter(function(item){return item.id!==id;});
-savePosts();
-render();
-}
-
-function render(){
-document.getElementById("profileName").textContent=username||"Tadigo Üyesi";
-document.getElementById("username").value=username;
-
-const feed=document.getElementById("feed");
-
-if(posts.length===0){
-feed.innerHTML='<div class="empty"><div style="font-size:42px">🍽️</div><h3>Henüz paylaşım yok</h3><p>İlk yemeği sen paylaş!</p></div>';
-}else{
-feed.innerHTML=posts.map(function(post){
-if(!Array.isArray(post.likes))post.likes=[];
-const liked=username&&post.likes.includes(username);
-return `
-<article class="post">
-<div class="post-top">
-<div class="avatar">😋</div>
-<div>
-<strong>${safeText(post.username)}</strong>
-<div class="muted">${safeText(formatDate(post.date))}</div>
-</div>
-</div>
-<div class="post-food">${safeText(post.emoji)}</div>
-<h3>${safeText(post.food)}</h3>
-<div class="post-description">${safeText(post.description||"Bu yemek favorilerimden!")}</div>
-<div class="post-actions">
-<button class="like-btn ${liked?"liked":""}" onclick="toggleLike('${safeText(post.id)}')">${liked?"❤️ Beğendin":"🤍 Beğen"} · ${post.likes.length}</button>
-${post.username===username?`<button class="secondary" onclick="deletePost('${safeText(post.id)}')">🗑️ Sil</button>`:""}
-</div>
-</article>`;
-}).join("");
-}
-
-const totals={};
-posts.forEach(function(post){
-const key=post.food.trim().toLocaleLowerCase("tr-TR");
-if(!totals[key]){
-totals[key]={food:post.food,emoji:post.emoji,likes:0,posts:0};
-}
-totals[key].likes+=(Array.isArray(post.likes)?post.likes.length:0);
-totals[key].posts++;
-});
-
-const popular=Object.values(totals).sort(function(a,b){
-return b.likes-a.likes||b.posts-a.posts;
-}).slice(0,10);
-
-document.getElementById("popularList").innerHTML=popular.length?
-popular.map(function(item,index){
-return `<div class="popular-item">
-<div class="rank">${index+1}.</div>
-<div class="popular-emoji">${safeText(item.emoji)}</div>
-<div class="popular-info"><b>${safeText(item.food)}</b><span class="muted">${item.posts} paylaşım</span></div>
-<span>❤️ ${item.likes}</span>
-</div>`;
-}).join(""):'<p class="empty">Popüler yemekler burada görünecek.</p>';
-}
-
-render();
+renderHome();
+renderRecipes();
+renderFavorites();
 </script>
 </body>
 </html>
