@@ -4,65 +4,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tadigo - Ne Yesem?</title>
+<title>Tadigo - Yemek Savaşı</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #fff3e5;
-  text-align: center;
-  padding: 25px;
-  color: #333;
-}
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  max-width: 400px;
-  margin: 50px auto;
-  box-shadow: 0 4px 15px #ddd;
-}
-h1 { color: #ff6500; font-size: 38px; }
-button {
-  background: #ff6500;
-  color: white;
-  border: 0;
-  border-radius: 12px;
-  padding: 15px 25px;
-  font-size: 18px;
-  margin-top: 20px;
-}
-#sonuc { font-size: 22px; font-weight: bold; }
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#fff3e5;text-align:center;padding:15px;color:#333}
+.card{background:white;padding:22px 14px;border-radius:22px;max-width:450px;margin:25px auto;box-shadow:0 4px 15px #ddd}
+h1{color:#ff6500;font-size:38px}
+h2{color:#ff6500}
+button{font-family:inherit}
+.battle{display:flex;gap:12px;margin:25px 0}
+.food{flex:1;min-width:0;min-height:155px;padding:15px 5px;background:#fff3e5;border:3px solid #ffd2ad;border-radius:18px;cursor:pointer;box-shadow:0 4px 0 #e8bd98;color:#333}
+.emoji{display:block;font-size:48px;margin-bottom:12px}
+.name{font-size:17px;font-weight:bold}
+.food:active{transform:scale(.96)}
+.food:disabled{cursor:default}
+.winner{border-color:#ff6500;background:#ffe0c5}
+.reset{background:#ff6500;color:white;border:0;border-radius:12px;padding:14px 22px;font-size:16px;cursor:pointer;margin-top:12px}
+#sonuc{font-weight:bold;color:#ff6500;min-height:24px}
+#final{display:none}
+.champion{font-size:75px}
 </style>
 </head>
 <body>
 <div class="card">
 <h1>🍔 Tadigo</h1>
-<h2>Bugün ne yesem?</h2>
-<p>Kararsız kaldıysan seçimi bize bırak!</p>
-<button onclick="oner()">🍽️ Bana yemek öner</button>
-<p id="sonuc"></p>
+<h2>⚔️ Yemek Savaşı</h2>
+<p>İki yemekten birini seç, şampiyonunu belirle!</p>
+
+<div id="oyun">
+<h2 id="tur">Çeyrek Final</h2>
+<p id="bilgi"></p>
+<div class="battle">
+<button class="food" id="sol" onclick="sec(0)">
+<span class="emoji" id="emoji0"></span>
+<span class="name" id="isim0"></span>
+</button>
+<button class="food" id="sag" onclick="sec(1)">
+<span class="emoji" id="emoji1"></span>
+<span class="name" id="isim1"></span>
+</button>
 </div>
+<p id="sonuc">🔥 Savaş başlasın!</p>
+<button class="reset" onclick="baslat()">↻ Baştan Başla</button>
+</div>
+
+<div id="final">
+<div class="champion">🏆</div>
+<h2>YEMEK ŞAMPİYONU!</h2>
+<div class="champion" id="kazananEmoji"></div>
+<h2 id="kazananIsim"></h2>
+<p>Oyunun kazananı belli oldu! Afiyet olsun 😋</p>
+<button class="reset" onclick="baslat()">Tekrar Oyna</button>
+</div>
+</div>
+
 <script>
-function oner() {
-  const yemekler = [
-    "🍔 Hamburger",
-    "🍕 Pizza",
-    "🌯 Döner",
-    "🍝 Makarna",
-    "🥪 Tost",
-    "🥙 Lahmacun",
-    "🍗 Tavuk",
-    "🥘 Mantı",
-    "🥞 Pankek",
-    "🍟 Patates kızartması"
-  ];
-  const secim = yemekler[
-    Math.floor(Math.random() * yemekler.length)
-  ];
-  document.getElementById("sonuc").textContent =
-    "Bugün bunu ye: " + secim;
+const yemekler=[
+["🍔","Hamburger"],
+["🍕","Pizza"],
+["🌯","Döner"],
+["🍝","Makarna"],
+["🥪","Tost"],
+["🫓","Lahmacun"],
+["🍗","Tavuk"],
+["🥟","Mantı"]
+];
+
+let turlar=[];
+let tur=0;
+let mac=0;
+let kilit=false;
+
+function karistir(liste){
+let sonuc=[...liste];
+for(let i=sonuc.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[sonuc[i],sonuc[j]]=[sonuc[j],sonuc[i]];
 }
+return sonuc;
+}
+
+function baslat(){
+turlar=[karistir(yemekler)];
+tur=0;
+mac=0;
+kilit=false;
+document.getElementById("oyun").style.display="block";
+document.getElementById("final").style.display="none";
+document.getElementById("sonuc").textContent="🔥 Savaş başlasın!";
+goster();
+}
+
+function goster(){
+const turIsimleri=["Çeyrek Final","Yarı Final","Büyük Final"];
+document.getElementById("tur").textContent=turIsimleri[tur];
+document.getElementById("bilgi").textContent=
+"Maç "+(mac+1)+" / "+(turlar[tur].length/2)+" — Hangisini seçiyorsun?";
+
+for(let i=0;i<2;i++){
+let yemek=turlar[tur][mac*2+i];
+document.getElementById("emoji"+i).textContent=yemek[0];
+document.getElementById("isim"+i).textContent=yemek[1];
+}
+
+document.getElementById("sol").className="food";
+document.getElementById("sag").className="food";
+document.getElementById("sol").disabled=false;
+document.getElementById("sag").disabled=false;
+kilit=false;
+}
+
+function sec(secim){
+if(kilit)return;
+kilit=true;
+
+let secilen=turlar[tur][mac*2+secim];
+turlar[tur].kazananlar=turlar[tur].kazananlar||[];
+turlar[tur].kazananlar.push(secilen);
+
+document.getElementById(secim===0?"sol":"sag").classList.add("winner");
+document.getElementById(secim===0?"sag":"sol").disabled=true;
+document.getElementById("sol").disabled=true;
+document.getElementById("sag").disabled=true;
+
+document.getElementById("sonuc").textContent=
+"🔥 "+secilen[1]+" bu maçı kazandı!";
+
+setTimeout(function(){
+mac++;
+
+if(mac<turlar[tur].length/2){
+goster();
+return;
+}
+
+if(tur===2){
+sampiyonGoster(turlar[tur].kazananlar[0]);
+return;
+}
+
+tur++;
+mac=0;
+turlar[tur]=turlar[tur-1].kazananlar;
+document.getElementById("sonuc").textContent="🎉 Yeni tur başlıyor!";
+goster();
+},700);
+}
+
+function sampiyonGoster(yemek){
+document.getElementById("oyun").style.display="none";
+document.getElementById("final").style.display="block";
+document.getElementById("kazananEmoji").textContent=yemek[0];
+document.getElementById("kazananIsim").textContent=yemek[1];
+}
+
+baslat();
 </script>
 </body>
 </html>
+
 
