@@ -4,256 +4,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tadigo - Sana Özel Yemek</title>
+<title>Tadigo | Yemek Topluluğu</title>
 <style>
+:root{--orange:#ff6500;--bg:#fff5eb;--card:#fff;--text:#302820;--muted:#81766d}
 *{box-sizing:border-box}
-body{margin:0;background:#fff3e5;color:#333;font-family:Arial,sans-serif}
-header{background:#ff6500;color:white;text-align:center;padding:22px 10px}
-header h1{margin:0;font-size:36px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#ff6500,#ff9b35);color:white;padding:24px 16px;text-align:center}
+header h1{font-size:36px;margin:0}
 header p{margin:8px 0 0}
-.layout{display:grid;grid-template-columns:1fr minmax(280px,2fr) 1fr;gap:15px;max-width:1250px;margin:22px auto;padding:0 15px}
-.panel{background:white;padding:16px;border-radius:18px;box-shadow:0 3px 12px #ead8c8;min-width:0}
-.panel h2{font-size:19px;color:#ff6500;text-align:center}
-.foodrow{display:flex;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}
-.foodrow .emoji{font-size:25px}
-.foodrow .details{flex:1;font-size:14px}
-.small{color:#888;font-size:12px;margin-top:4px}
-.rank{font-weight:bold;width:23px}
-.center{text-align:center}
-label{display:block;text-align:left;font-weight:bold;margin:15px 0 7px}
-select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:white;font-size:15px}
-button{border:0;border-radius:11px;background:#ff6500;color:white;padding:13px 16px;font-size:15px;font-weight:bold;cursor:pointer}
-button:active{transform:scale(.98)}
-.mainbtn{width:100%;margin-top:20px}
-.result{background:#fff3e5;border-radius:15px;padding:18px;margin-top:18px;display:none}
-.result .big{font-size:55px}
-.result h3{color:#ff6500}
-.points{font-size:30px;color:#ff6500;font-weight:bold}
-.muted{font-size:12px;color:#888;line-height:1.5}
-footer{text-align:center;padding:15px;color:#888;font-size:12px}
-@media(max-width:800px){
-.layout{grid-template-columns:1fr;max-width:520px}
-#onerPanel{grid-row:1}
-#popularPanel{grid-row:2}
-#puanPanel{grid-row:3}
-}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:12px;background:white;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0000000a}
+nav a{color:var(--orange);font-weight:bold;text-decoration:none;padding:8px}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.card{background:var(--card);padding:20px;border-radius:18px;box-shadow:0 4px 16px #74401b10;margin-bottom:18px}
+h2{font-size:21px;margin:0 0 14px}
+h3{margin:8px 0}
+label{display:block;font-size:14px;font-weight:bold;margin:13px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #e7d9cc;border-radius:10px;font:inherit;background:white}
+textarea{min-height:95px;resize:vertical}
+button{border:0;background:var(--orange);color:white;padding:11px 15px;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer}
+button:hover{filter:brightness(.95)}
+.secondary{background:#fff0e2;color:#d95000}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.profile{display:flex;align-items:center;gap:12px}
+.avatar{background:#fff0df;border-radius:50%;width:48px;height:48px;display:grid;place-items:center;font-size:25px;flex-shrink:0}
+.profile div:last-child{min-width:0}
+.profile-name{font-weight:bold;font-size:16px;overflow-wrap:anywhere}
+.profile-edit{display:flex;gap:8px;margin-top:14px}
+.profile-edit input{min-width:0;flex:1}
+.post{border:1px solid #f0e6dd;border-radius:14px;padding:15px;margin-top:13px}
+.post-top{display:flex;gap:10px;align-items:center}
+.post-top .avatar{width:40px;height:40px;font-size:21px}
+.post-top .muted{margin-top:3px}
+.post-food{font-size:42px;margin:14px 0 5px}
+.post-description{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
+.post-actions{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.like-btn{background:#fff0e2;color:#d95000}
+.like-btn.liked{background:#ffe0e0;color:#c62828}
+.empty{text-align:center;padding:24px 8px;color:var(--muted)}
+.popular-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0e6dd}
+.popular-item:last-child{border:0}
+.popular-emoji{font-size:30px}
+.popular-info{flex:1;min-width:0}
+.popular-info b{display:block;overflow-wrap:anywhere}
+.rank{font-weight:bold;color:var(--orange);width:22px}
+.tag{display:inline-block;background:#fff0e2;color:#c54d00;padding:5px 9px;border-radius:20px;font-size:12px;margin-top:5px}
+.notice{background:#fff4df;padding:12px;border-radius:10px;color:#765020;font-size:13px;line-height:1.5}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}header h1{font-size:30px}.card{padding:16px}}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🍔 Tadigo</h1>
-<p>Ne yesem? Sana özel yemek önerileri!</p>
+<p>Yemeklerini paylaş, yeni lezzetler keşfet!</p>
 </header>
 
-<div class="layout">
+<nav>
+<a href="#community">👥 Topluluk</a>
+<a href="#share">🍕 Yemek paylaş</a>
+<a href="#popular">🏆 Popüler yemekler</a>
+</nav>
 
-<section class="panel" id="popularPanel">
-<h2>🏆 En Çok Yenenler</h2>
-<p class="muted center">Ziyaretçilerin bu cihazda verdiği oylar</p>
-<div id="populerListe"></div>
+<main>
+<div class="grid">
+<div>
+<section class="card">
+<h2>👤 Profilin</h2>
+<div class="profile">
+<div class="avatar">😎</div>
+<div>
+<div class="profile-name" id="profileName">Tadigo Üyesi</div>
+<div class="muted">Yemek topluluğunun bir parçasısın!</div>
+</div>
+</div>
+<div class="profile-edit">
+<input id="username" maxlength="24" placeholder="Kullanıcı adın">
+<button onclick="saveName()">Kaydet</button>
+</div>
+<p class="muted">Paylaşımların kullanıcı adınla görünür.</p>
 </section>
 
-<section class="panel" id="onerPanel">
-<h2>🍽️ Sana Özel Yemek Bul</h2>
-<p class="center">Soruları cevapla, yemeğini keşfet!</p>
+<section class="card" id="share">
+<h2>🍕 Yemek paylaş</h2>
+<form id="postForm">
+<label for="food">Yemek adı</label>
+<input id="food" maxlength="50" placeholder="Örn. Hamburger" required>
 
-<label for="aclik">Ne kadar açsın?</label>
-<select id="aclik">
-<option value="az">Biraz açım</option>
-<option value="orta" selected>Orta derecede açım</option>
-<option value="cok">Çok açım</option>
+<label for="emoji">Yemek emojisi</label>
+<select id="emoji">
+<option value="🍔">🍔 Hamburger</option>
+<option value="🍕">🍕 Pizza</option>
+<option value="🍟">🍟 Patates kızartması</option>
+<option value="🍝">🍝 Makarna</option>
+<option value="🌯">🌯 Dürüm</option>
+<option value="🥗">🥗 Salata</option>
+<option value="🍰">🍰 Pasta</option>
+<option value="🍜">🍜 Çorba / noodle</option>
+<option value="🍗">🍗 Tavuk</option>
+<option value="🍚">🍚 Pilav</option>
+<option value="🥪">🥪 Sandviç</option>
+<option value="🍩">🍩 Donut</option>
+<option value="🍦">🍦 Dondurma</option>
+<option value="🧁">🧁 Kek</option>
 </select>
 
-<label for="tat">Ne tarz yemek istersin?</label>
-<select id="tat">
-<option value="fark">Fark etmez</option>
-<option value="hafif">Hafif bir şey</option>
-<option value="doyurucu">Doyurucu bir yemek</option>
-<option value="tatli">Tatlı</option>
-</select>
+<label for="description">Neden seviyorsun?</label>
+<textarea id="description" maxlength="280" placeholder="Bu yemeği neden sevdiğini anlat..."></textarea>
 
-<label for="ogun">Hangi öğün?</label>
-<select id="ogun">
-<option value="kahvalti">Kahvaltı</option>
-<option value="ogle">Öğle yemeği</option>
-<option value="aksam" selected>Akşam yemeği</option>
-<option value="atistirma">Atıştırmalık</option>
-</select>
-
-<label for="alerji">Kaçındığın yiyecek var mı?</label>
-<select id="alerji">
-<option value="yok">Yok</option>
-<option value="sut">Süt ve süt ürünleri</option>
-<option value="gluten">Buğday / gluten</option>
-<option value="et">Et ürünleri</option>
-</select>
-
-<label for="hasta">Kendini hasta hissediyor musun?</label>
-<select id="hasta">
-<option value="hayir">Hayır</option>
-<option value="evet">Evet</option>
-</select>
-
-<button class="mainbtn" onclick="oner()">🍴 Bana Yemek Öner</button>
-
-<div class="result" id="sonuc">
-<div class="big" id="sonucEmoji"></div>
-<h3 id="sonucAd"></h3>
-<p id="sonucAciklama"></p>
-<button onclick="secimiTamamla()">✅ Seçimimi Tamamladım (+10 Puan)</button>
-<p class="muted">Puan almak için öneriyi seçtiğini onayla.</p>
-</div>
-<p id="mesaj" class="center"></p>
+<button type="submit" style="width:100%;margin-top:14px">🚀 Paylaşımı yayınla</button>
+</form>
+<p class="muted">Paylaşımın bu tarayıcıda kaydedilir.</p>
 </section>
 
-<section class="panel" id="puanPanel">
-<h2>⭐ Puan Sıralaması</h2>
-<div class="center">
-<p>Senin puanın</p>
-<div class="points" id="benimPuanim">0</div>
-<p class="muted">Tamamladığın her seçim +10 puan</p>
-</div>
-<div id="puanListe"></div>
+<section class="card" id="popular">
+<h2>🏆 En popüler yemekler</h2>
+<p class="muted">Beğeni sayısına göre sıralama</p>
+<div id="popularList"></div>
 </section>
-
 </div>
 
-<footer>
-Tadigo 🍔 — Oylar ve puanlar bu tarayıcıda saklanır.
-</footer>
+<div>
+<section class="card" id="community">
+<h2>👥 Yemek Topluluğu</h2>
+<p class="muted">Herkesin yemek fikirlerini keşfet. Sen de sevdiğin lezzetleri paylaş!</p>
+<div class="notice">💡 Bir yemeği beğendiğinde kalbe bas. En çok beğenilen yemekler popülerler listesinde görünür.</div>
+<div id="feed"></div>
+</section>
+</div>
+</div>
+</main>
+
+<footer>🍔 Tadigo — Lezzetini paylaş!</footer>
 
 <script>
-const yemekler=[
-{ad:"Hamburger",emoji:"🍔",tat:"doyurucu",ogun:["ogle","aksam","atistirma"],sut:false,gluten:true,et:true},
-{ad:"Pizza",emoji:"🍕",tat:"doyurucu",ogun:["ogle","aksam"],sut:true,gluten:true,et:false},
-{ad:"Döner",emoji:"🌯",tat:"doyurucu",ogun:["ogle","aksam"],sut:false,gluten:true,et:true},
-{ad:"Makarna",emoji:"🍝",tat:"doyurucu",ogun:["ogle","aksam"],sut:true,gluten:true,et:false},
-{ad:"Tost",emoji:"🥪",tat:"hafif",ogun:["kahvalti","ogle","atistirma"],sut:true,gluten:true,et:false},
-{ad:"Lahmacun",emoji:"🫓",tat:"doyurucu",ogun:["ogle","aksam"],sut:false,gluten:true,et:true},
-{ad:"Tavuk",emoji:"🍗",tat:"doyurucu",ogun:["ogle","aksam"],sut:false,gluten:false,et:true},
-{ad:"Mantı",emoji:"🥟",tat:"doyurucu",ogun:["ogle","aksam"],sut:true,gluten:true,et:false},
-{ad:"Pankek",emoji:"🥞",tat:"tatli",ogun:["kahvalti","atistirma"],sut:true,gluten:true,et:false},
-{ad:"Patates kızartması",emoji:"🍟",tat:"hafif",ogun:["ogle","atistirma"],sut:false,gluten:false,et:false},
-{ad:"Meyve tabağı",emoji:"🍎",tat:"hafif",ogun:["kahvalti","atistirma"],sut:false,gluten:false,et:false},
-{ad:"Sütlaç",emoji:"🍚",tat:"tatli",ogun:["atistirma"],sut:true,gluten:false,et:false}
-];
+const STORE_KEY="tadigo_community_posts_v1";
+const NAME_KEY="tadigo_community_name_v1";
 
-function oku(key,varsayilan){
- try{
-  const v=localStorage.getItem(key);
-  return v===null?varsayilan:JSON.parse(v);
- }catch(e){return varsayilan}
-}
-let oylar=oku("tadigo_oylar",{});
-let puanlar=oku("tadigo_puanlar",{});
-let benimPuanim=oku("tadigo_benim_puanim",0);
-let secilenYemek=null;
-
-function kaydet(){
- try{
-  localStorage.setItem("tadigo_oylar",JSON.stringify(oylar));
-  localStorage.setItem("tadigo_puanlar",JSON.stringify(puanlar));
-  localStorage.setItem("tadigo_benim_puanim",JSON.stringify(benimPuanim));
- }catch(e){}
+function readStore(key,fallback){
+try{
+const value=localStorage.getItem(key);
+return value===null?fallback:JSON.parse(value);
+}catch(error){return fallback}
 }
 
-function ciz(){
- const pop=[...yemekler].sort((a,b)=>(oylar[b.ad]||0)-(oylar[a.ad]||0));
- document.getElementById("populerListe").innerHTML=pop.slice(0,8).map((y,i)=>`
- <div class="foodrow">
- <div class="rank">${i+1}.</div><div class="emoji">${y.emoji}</div>
- <div class="details"><b>${y.ad}</b><div class="small">${oylar[y.ad]||0} oy</div></div>
- <button onclick="oyVer('${y.ad}')">Oy</button>
- </div>`).join("");
+let posts=readStore(STORE_KEY,[]);
+let username=readStore(NAME_KEY,"");
 
- document.getElementById("benimPuanim").textContent=benimPuanim;
- const liste=Object.entries(puanlar).sort((a,b)=>b[1]-a[1]);
- document.getElementById("puanListe").innerHTML=
- '<h3>Oyuncular</h3>'+
- (liste.length?liste.map((p,i)=>`
- <div class="foodrow"><div class="rank">${i+1}.</div>
- <div class="details"><b>${p[0]}</b><div class="small">${p[1]} puan</div></div></div>
- `).join(""):'<p class="muted">Henüz puan yok. İlk puanı sen kazan!</p>');
+if(!Array.isArray(posts))posts=[];
+
+function safeText(value){
+return String(value).replace(/[&<>"']/g,function(char){
+return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char];
+});
 }
 
-function oyVer(ad){
- oylar[ad]=(oylar[ad]||0)+1;
- kaydet();ciz();
- document.getElementById("mesaj").textContent=ad+" için oyun kaydedildi! 🎉";
+function savePosts(){
+try{
+localStorage.setItem(STORE_KEY,JSON.stringify(posts));
+}catch(error){
+alert("Kayıt yapılamadı. Tarayıcının depolama alanını kontrol et.");
+}
 }
 
-function oner(){
- const aclik=document.getElementById("aclik").value;
- const tat=document.getElementById("tat").value;
- const ogun=document.getElementById("ogun").value;
- const alerji=document.getElementById("alerji").value;
- const hasta=document.getElementById("hasta").value;
-
- let uygun=yemekler.filter(y=>{
-  if(alerji==="sut"&&y.sut)return false;
-  if(alerji==="gluten"&&y.gluten)return false;
-  if(alerji==="et"&&y.et)return false;
-  if(tat!=="fark"&&y.tat!==tat)return false;
-  if(!y.ogun.includes(ogun))return false;
-  return true;
- });
-
- if(!uygun.length){
-  document.getElementById("sonuc").style.display="block";
-  document.getElementById("sonucEmoji").textContent="🤔";
-  document.getElementById("sonucAd").textContent="Uygun öneri bulamadım";
-  document.getElementById("sonucAciklama").textContent="Seçeneklerinden birini değiştirip tekrar dene.";
-  secilenYemek=null;return;
- }
-
- if(aclik==="az")uygun=uygun.filter(y=>y.tat!=="doyurucu");
- if(aclik==="cok")uygun=uygun.filter(y=>y.tat==="doyurucu");
- if(!uygun.length)uygun=yemekler.filter(y=>
-  (alerji!=="sut"||!y.sut)&&
-  (alerji!=="gluten"||!y.gluten)&&
-  (alerji!=="et"||!y.et)&&
-  y.ogun.includes(ogun)&&
-  (tat==="fark"||y.tat===tat)
- );
- if(!uygun.length){
-  document.getElementById("sonuc").style.display="block";
-  document.getElementById("sonucEmoji").textContent="🤔";
-  document.getElementById("sonucAd").textContent="Başka seçenek dene";
-  document.getElementById("sonucAciklama").textContent="Bu seçimlerle uygun yemek bulamadık.";
-  secilenYemek=null;return;
- }
-
- secilenYemek=uygun[Math.floor(Math.random()*uygun.length)];
- document.getElementById("sonuc").style.display="block";
- document.getElementById("sonucEmoji").textContent=secilenYemek.emoji;
- document.getElementById("sonucAd").textContent=secilenYemek.ad;
- document.getElementById("sonucAciklama").textContent=
- hasta==="evet"?
- "Geçmiş olsun! Bu sadece bir yemek fikridir, tedavi önerisi değildir. Kendini kötü hissediyorsan bir yetişkine veya sağlık uzmanına danış.":
- "Cevaplarına göre rastgele bir öneri. Afiyet olsun!";
- document.getElementById("mesaj").textContent="";
+function saveName(){
+const field=document.getElementById("username");
+const value=field.value.trim().slice(0,24);
+if(!value){
+alert("Önce bir kullanıcı adı yaz!");
+return;
+}
+username=value;
+localStorage.setItem(NAME_KEY,JSON.stringify(username));
+render();
 }
 
-function secimiTamamla(){
- if(!secilenYemek){
-  document.getElementById("mesaj").textContent="Önce bir yemek önerisi al!";
-  return;
- }
- const ad=prompt("Puan tablosunda hangi isim görünsün?","Oyuncu");
- if(ad===null)return;
- const isim=ad.trim().slice(0,20)||"Oyuncu";
- benimPuanim+=10;
- puanlar[isim]=(puanlar[isim]||0)+10;
- oylar[secilenYemek.ad]=(oylar[secilenYemek.ad]||0)+1;
- kaydet();ciz();
- document.getElementById("mesaj").textContent=
- "🎉 "+secilenYemek.ad+" seçimini tamamladın! +10 puan kazandın!";
- secilenYemek=null;
- document.getElementById("sonuc").style.display="none";
+document.getElementById("username").value=username;
+
+function formatDate(value){
+try{
+return new Date(value).toLocaleDateString("tr-TR",{
+day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"
+});
+}catch(error){return ""}
 }
 
-ciz();
+document.getElementById("postForm").addEventListener("submit",function(event){
+event.preventDefault();
+
+if(!username){
+alert("Önce profil bölümünden kullanıcı adını kaydet!");
+document.getElementById("username").focus();
+return;
+}
+
+const food=document.getElementById("food").value.trim();
+const description=document.getElementById("description").value.trim();
+const emoji=document.getElementById("emoji").value;
+
+if(!food){
+alert("Yemek adını yazmalısın!");
+return;
+}
+
+posts.unshift({
+id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),
+username:username,
+food:food,
+description:description,
+emoji:emoji,
+likes:[],
+date:new Date().toISOString()
+});
+
+savePosts();
+this.reset();
+render();
+document.getElementById("community").scrollIntoView({behavior:"smooth"});
+});
+
+function toggleLike(id){
+if(!username){
+alert("Beğenmek için önce bir kullanıcı adı kaydet!");
+document.getElementById("username").focus();
+return;
+}
+
+const post=posts.find(function(item){return item.id===id;});
+if(!post)return;
+
+if(!Array.isArray(post.likes))post.likes=[];
+const index=post.likes.indexOf(username);
+
+if(index>=0){
+post.likes.splice(index,1);
+}else{
+post.likes.push(username);
+}
+
+savePosts();
+render();
+}
+
+function deletePost(id){
+const post=posts.find(function(item){return item.id===id;});
+if(!post||post.username!==username)return;
+
+if(!confirm("Bu paylaşımı silmek istiyor musun?"))return;
+
+posts=posts.filter(function(item){return item.id!==id;});
+savePosts();
+render();
+}
+
+function render(){
+document.getElementById("profileName").textContent=username||"Tadigo Üyesi";
+document.getElementById("username").value=username;
+
+const feed=document.getElementById("feed");
+
+if(posts.length===0){
+feed.innerHTML='<div class="empty"><div style="font-size:42px">🍽️</div><h3>Henüz paylaşım yok</h3><p>İlk yemeği sen paylaş!</p></div>';
+}else{
+feed.innerHTML=posts.map(function(post){
+if(!Array.isArray(post.likes))post.likes=[];
+const liked=username&&post.likes.includes(username);
+return `
+<article class="post">
+<div class="post-top">
+<div class="avatar">😋</div>
+<div>
+<strong>${safeText(post.username)}</strong>
+<div class="muted">${safeText(formatDate(post.date))}</div>
+</div>
+</div>
+<div class="post-food">${safeText(post.emoji)}</div>
+<h3>${safeText(post.food)}</h3>
+<div class="post-description">${safeText(post.description||"Bu yemek favorilerimden!")}</div>
+<div class="post-actions">
+<button class="like-btn ${liked?"liked":""}" onclick="toggleLike('${safeText(post.id)}')">${liked?"❤️ Beğendin":"🤍 Beğen"} · ${post.likes.length}</button>
+${post.username===username?`<button class="secondary" onclick="deletePost('${safeText(post.id)}')">🗑️ Sil</button>`:""}
+</div>
+</article>`;
+}).join("");
+}
+
+const totals={};
+posts.forEach(function(post){
+const key=post.food.trim().toLocaleLowerCase("tr-TR");
+if(!totals[key]){
+totals[key]={food:post.food,emoji:post.emoji,likes:0,posts:0};
+}
+totals[key].likes+=(Array.isArray(post.likes)?post.likes.length:0);
+totals[key].posts++;
+});
+
+const popular=Object.values(totals).sort(function(a,b){
+return b.likes-a.likes||b.posts-a.posts;
+}).slice(0,10);
+
+document.getElementById("popularList").innerHTML=popular.length?
+popular.map(function(item,index){
+return `<div class="popular-item">
+<div class="rank">${index+1}.</div>
+<div class="popular-emoji">${safeText(item.emoji)}</div>
+<div class="popular-info"><b>${safeText(item.food)}</b><span class="muted">${item.posts} paylaşım</span></div>
+<span>❤️ ${item.likes}</span>
+</div>`;
+}).join(""):'<p class="empty">Popüler yemekler burada görünecek.</p>';
+}
+
+render();
 </script>
 </body>
 </html>
