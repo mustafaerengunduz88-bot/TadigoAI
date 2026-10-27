@@ -1,1 +1,68 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tadigo - Ne Yesem?</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #fff3e5;
+  text-align: center;
+  padding: 25px;
+  color: #333;
+}
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 400px;
+  margin: 50px auto;
+  box-shadow: 0 4px 15px #ddd;
+}
+h1 { color: #ff6500; font-size: 38px; }
+button {
+  background: #ff6500;
+  color: white;
+  border: 0;
+  border-radius: 12px;
+  padding: 15px 25px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+#sonuc { font-size: 22px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🍔 Tadigo</h1>
+<h2>Bugün ne yesem?</h2>
+<p>Kararsız kaldıysan seçimi bize bırak!</p>
+<button onclick="oner()">🍽️ Bana yemek öner</button>
+<p id="sonuc"></p>
+</div>
+<script>
+function oner() {
+  const yemekler = [
+    "🍔 Hamburger",
+    "🍕 Pizza",
+    "🌯 Döner",
+    "🍝 Makarna",
+    "🥪 Tost",
+    "🥙 Lahmacun",
+    "🍗 Tavuk",
+    "🥘 Mantı",
+    "🥞 Pankek",
+    "🍟 Patates kızartması"
+  ];
+  const secim = yemekler[
+    Math.floor(Math.random() * yemekler.length)
+  ];
+  document.getElementById("sonuc").textContent =
+    "Bugün bunu ye: " + secim;
+}
+</script>
+</body>
+</html>
+
